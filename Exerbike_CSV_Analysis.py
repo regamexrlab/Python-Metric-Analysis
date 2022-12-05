@@ -22,13 +22,24 @@ with open('GOTOES_FIT-CSV_4493050655517899(1).csv', 'r') as file:
 with open('sample_analysis.txt', 'w') as file:
     file.write("Minute, Heart Rate/Min, Speed/Min")
     file.write("\n")
+    speed_sum, hr_sum = 0, 0
     for i in range(len(speeds)):
-        file.write(str(i))
-        file.write(", ")
-        file.write(hrs[i])
-        file.write(", ")
-        file.write(speeds[i])
-        file.write("\n")
+        speed_sum += float(speeds[i])
+        hr_sum += float(hrs[i])
+     
+        
+        if i % 60 == 0 and i != 0:
+            print(i, hr_sum)
+            avr_hr = round(hr_sum / 60, 2)
+            avr_speed = round(speed_sum / 60, 2)
+            file.write(str(i // 60))
+            file.write(", ")
+            file.write(str(avr_hr))
+            file.write(", ")
+            file.write(str(avr_speed))
+            file.write("\n")
+            speed_sum = 0 
+            hr_sum = 0 
 
     file.write("Average Speed: ")
     file.write(str(avr_speed))
